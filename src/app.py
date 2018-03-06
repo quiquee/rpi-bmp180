@@ -2,6 +2,7 @@
 from flask import Flask, jsonify
 from flask.ext.cors import CORS
 import Adafruit_BMP.BMP085 as BMP085
+import json
 
 app = Flask(__name__)
 cors = CORS(app, resources={r"/*": {"origins": "*"}})
@@ -13,6 +14,16 @@ def get_tasks():
     temp = sensor.read_temperature()
     temp = (temp * 9/5 +32)
     return str(temp)
+
+@app.route('/debug', methods=['GET'])
+def debug():
+    output = dict()
+    bmp180 = dict()
+    bmp180['temperature'] = sensor.read_temperature()
+    bmp180['temperatureF'] = (sensor.read_temperature() * 9/5 +32)
+    bmp180['pressure'] = sensor.read_pressure()
+    bmp180['altitude'] = sensor.read_altitude()
+    return json.dumps(bmp180, ensure_ascii=False)
 
 @app.route('/temperature', methods=['GET'])
 def get_tasks3():
