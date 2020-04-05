@@ -3,8 +3,12 @@ FROM resin/rpi-raspbian
 MAINTAINER <blgulla@ncsu.edu>
 
 
-RUN apt-get update; apt-get install -y git build-essential python-dev python-smbus apt-utils python-setuptools 
+RUN apt-get update; apt-get install -y git build-essential python-dev python-smbus apt-utils i2c-tools 
 RUN apt-get install -y python-pip; 
+RUN curl https://bootstrap.pypa.io/get-pip.py > get-pip.py
+RUN python get-pip.py
+RUN pip install -U pip setuptools
+
 RUN git clone https://github.com/adafruit/Adafruit_Python_BMP.git /data/adafruit ; cd /data/adafruit; python setup.py install
 RUN pip install Flask flask-cors
 
