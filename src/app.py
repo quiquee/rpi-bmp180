@@ -1,6 +1,6 @@
 #!/usr/bin/python
 from flask import Flask, jsonify
-from flask.ext.cors import CORS
+from flask_cors import CORS
 import Adafruit_BMP.BMP085 as BMP085
 import json
 
